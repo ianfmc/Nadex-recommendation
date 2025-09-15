@@ -1,0 +1,10 @@
+bucket: livewell-prod
+region: us-west-2
+prefixes:
+  recommendations: recommendations
+  reports: reports
+  logs: logs
+  backtests: backtests
+  results_raw: results/raw
+  results_clean: results/clean
+  experiments: experiments

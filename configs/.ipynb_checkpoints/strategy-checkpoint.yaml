@@ -1,0 +1,10 @@
+markets: ["ES=F", "CL=F"]
+indicators:
+  ema_fast: 12
+  ema_slow: 26
+signal:
+  rule: ema_cross   # or another strategy name
+risk:
+  fee_per_side: 1.0        # $ per side
+  max_positions_per_day: 1
+  confidence_threshold: 0.55
