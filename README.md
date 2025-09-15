@@ -9,6 +9,7 @@ This repository is part of the **LIVEWELL** initiative: building an ML-driven wo
 
 **This is the Nadex-recommendation repository** 
 
-- The required notebooks/contracts.csv file lists the contracts that will be available
+- The required notebooks/contracts.csv file lists the contracts that will be available for trading the next day
 - Run the notebooks/nadex-recommendation.ipynb file
+- Recommendations are provided and are pushed to an S3 bucket
 
