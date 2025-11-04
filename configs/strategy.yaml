@@ -1,10 +1,18 @@
-markets: ["ES=F", "CL=F"]
-indicators:
-  ema_fast: 12
-  ema_slow: 26
-signal:
-  rule: ema_cross   # or another strategy name
-risk:
-  fee_per_side: 1.0        # $ per side
-  max_positions_per_day: 1
-  confidence_threshold: 0.55
+rsi:
+  period: 14
+  mode: centerline         # centerline | reversal
+  centerline: 50           # used if mode=centerline
+  oversold: 30             # used if mode=reversal
+  overbought: 70           # used if mode=reversal
+  require_cross: true      # if mode=reversal, wait for cross back through level
+
+trend:                     # optional trend filter
+  type: macd               # none | macd | sma
+  macd_fast: 12
+  macd_slow: 26
+  macd_signal: 9
+  sma_window: 50
+
+guardrails:                # used later in rec generation
+  confidence_threshold: 0.6
+  max_positions_per_day: 3
