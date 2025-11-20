@@ -1,6 +1,6 @@
 bucket: nadex-daily-results
 public_bucket: market-data-prod.nadex.com
-region: us-east-1
+region: us-west-2
 prefixes:
   historical: historical
   manifests: manifests

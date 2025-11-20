@@ -86,10 +86,10 @@ upload_df_to_s3(
 ## Summary of Changes Needed
 
 1. ✅ Config loading is already done
-2. ❌ `create_s3_clients()` - change default region and handle None case
-3. ❌ `run_recommendation_pipeline()` - add region parameter and pass to functions
-4. ❌ Final execution - pass REGION to run_recommendation_pipeline
-5. ❌ `upload_df_to_s3()` call - pass region parameter
+2. ✅ `create_s3_clients()` - change default region and handle None case
+3. ✅ `run_recommendation_pipeline()` - add region parameter and pass to functions
+4. ✅ Final execution - pass REGION to run_recommendation_pipeline
+5. ✅ `upload_df_to_s3()` call - pass region parameter
 
 ## Benefits
 - All S3 configuration centralized in `s3.yaml`
