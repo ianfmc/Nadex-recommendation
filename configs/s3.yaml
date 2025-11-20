@@ -1,10 +1,8 @@
-bucket: livewell-prod
-region: us-west-2
+bucket: nadex-daily-results
+public_bucket: market-data-prod.nadex.com
+region: us-east-1
 prefixes:
-  recommendations: recommendations
-  reports: reports
+  historical: historical
+  manifests: manifests
   logs: logs
-  backtests: backtests
-  results_raw: results/raw
-  results_clean: results/clean
-  experiments: experiments
+mapping_file: contracts.csv
