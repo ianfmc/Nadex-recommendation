@@ -14,5 +14,5 @@ trend:                     # optional trend filter
   sma_window: 50
 
 guardrails:                # used later in rec generation
-  confidence_threshold: 0.6
+  confidence_threshold: 0.3
   max_positions_per_day: 3
