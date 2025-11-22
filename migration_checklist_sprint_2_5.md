@@ -39,11 +39,11 @@ You can update this file as you go — check off items, add notes, or record sma
 
 - [X] Copy `nadex-results.ipynb` into `notebooks/`.
 - [X] Copy `nadex-recommendation.ipynb` into `notebooks/`.
-- [ ] Copy `nadex-backtesting.ipynb` into `notebooks/`.
+- [X] Copy `nadex-backtesting.ipynb` into `notebooks/`.
 
-- [ ] In each notebook, update imports to use `nadex_common` instead of local `lib/`:
-  - [ ] Remove any `sys.path.append("../lib")` or similar.
-  - [ ] Replace with:
+- [X] In each notebook, update imports to use `nadex_common` instead of local `lib/`:
+  - [X] Remove any `sys.path.append("../lib")` or similar.
+  - [X] Replace with:
     ```python
     from nadex_common import generate_rsi_signals, append_runlog_s3
     ```
@@ -77,16 +77,16 @@ You can update this file as you go — check off items, add notes, or record sma
 
 For each notebook:
 
-- [ ] `notebooks/nadex-results.ipynb` runs end-to-end using `configs/s3.yaml`:
-  - [ ] Reads PDFs / historical inputs.
-  - [ ] Writes cleaned CSVs to the correct S3 prefixes.
-  - [ ] Updates manifest and run log as before.
+- [X] `notebooks/nadex-results.ipynb` runs end-to-end using `configs/s3.yaml`:
+  - [X] Reads PDFs / historical inputs.
+  - [X] Writes cleaned CSVs to the correct S3 prefixes.
+  - [X] Updates manifest and run log as before.
 
-- [ ] `notebooks/nadex-recommendation.ipynb` runs end-to-end:
-  - [ ] Reads cleaned history from S3.
-  - [ ] Uses `nadex_common.generate_rsi_signals` correctly.
-  - [ ] Writes recommendation artifacts and summary.
-  - [ ] Appends to run log.
+- [X] `notebooks/nadex-recommendation.ipynb` runs end-to-end:
+  - [X] Reads cleaned history from S3.
+  - [X] Uses `nadex_common.generate_rsi_signals` correctly.
+  - [X] Writes recommendation artifacts and summary.
+  - [X] Appends to run log.
 
 - [ ] `notebooks/nadex-backtesting.ipynb` runs correctly (once wired to shared lib in Sprint 3).
 
@@ -94,17 +94,13 @@ For each notebook:
 
 ## 7. Legacy Repos
 
-- [ ] In `Nadex-results` repo:
-  - [ ] Update `README` to point to `livewell-nadex`.
-  - [ ] Optionally mark the repo as archived in GitHub settings.
+- [X] In `Nadex-results` repo:
+  - [X] Update `README` to point to `livewell-nadex`.
+  - [X] Optionally mark the repo as archived in GitHub settings.
 
-- [ ] In `Nadex-recommendation` repo:
-  - [ ] Update `README` to point to `livewell-nadex`.
-  - [ ] Optionally mark the repo as archived.
-
-- [ ] In `Nadex-backtesting` repo:
-  - [ ] Update `README` to point to `livewell-nadex`.
-  - [ ] Optionally mark the repo as archived.
+- [X] In `Nadex-backtesting` repo:
+  - [X] Update `README` to point to `livewell-nadex`.
+  - [X] Optionally mark the repo as archived.
 
 ---
 
