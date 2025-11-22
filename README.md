@@ -1,64 +1,160 @@
-# LIVEWELL / Nadex-recommendation
+# LIVEWELL / Nadex — Monorepo
 
-This repository is part of the **LIVEWELL** initiative: building an ML-driven workflow for stock price prediction and Nadex binary option recommendations.
+This repository contains the **LIVEWELL Nadex workflow**:
 
-## Overview
-- **Nadex-results** → stores and processes raw/extracted results data.
-- **Nadex-recommendation** → generates daily trading recommendations.
-- **Nadex-backtesting** → R&D notebooks for testing strategies and validating ideas.
+- Historical results extraction from Nadex Daily Results PDFs
+- Daily recommendation generation based on technical indicators (e.g., RSI)
+- Backtesting of strategies to evaluate performance and choose parameters
 
-**This is the Nadex-recommendation repository.**
+It consolidates prior repos (`Nadex-results`, `Nadex-recommendation`, `Nadex-backtesting`) into a single monorepo so that shared code, configuration, and documentation live in one place.
 
-- All runnable code lives in **`notebooks/`** (Jupyter).
-- **Do not commit data or outputs.** Historical/results/reports live in **S3** (see `configs/s3.yaml`).
-- Repo configuration lives in **`configs/`** (e.g., `s3.yaml`, `strategy.yaml`, `risk.yaml`, `anonymization.yaml`, `experiment.yaml`).
+---
 
-- The required notebooks/contracts.csv file lists the contracts that will be available for trading the next day
-- Run the notebooks/nadex-recommendation.ipynb file
-- Recommendations are provided and are pushed to an S3 bucket
+## Repository Layout
 
-## Quickstart
-1) Clone and install
+```text
+livewell-nadex/
+  pyproject.toml        # project definition (for pip install -e .)
+  requirements.txt      # Python dependencies
+  .gitignore            # ignore rules for Python, notebooks, etc.
+  README.md             # this file
+
+  src/
+    nadex_common/
+      __init__.py
+      strategy_rsi.py   # shared RSI/indicator logic
+      utils_s3.py       # shared S3 helpers, run log append, etc.
+
+  notebooks/
+    nadex-results.ipynb         # historical results extraction
+    nadex-recommendation.ipynb  # daily recommendation pipeline
+    nadex-backtesting.ipynb     # backtesting / research
+
+  configs/
+    s3.yaml             # bucket, prefixes, mapping file
+    strategy.yaml       # RSI modes, thresholds, guardrails
+
+  sprints/
+    sprint_1.md         # Historical Results MVP
+    sprint_2.md         # Config + shared lib + recommendation
+    sprint_2_5.md       # Monorepo consolidation
+    sprint_3.md         # Bucket guards + backtesting baseline
+```
+
+---
+
+## Getting Started
+
+### 1. Create and activate a virtual environment
+
+You can use `venv`, `conda`, or any other tool. Example with `python -m venv`:
+
 ```bash
-git clone https://github.com/ianfmc/<repo-name>
-cd <repo-name>
+python -m venv .venv
+source .venv/bin/activate  # on macOS/Linux
+# .venv\Scripts\activate  # on Windows
+```
+
+### 2. Install dependencies
+
+If you are using `requirements.txt`:
+
+```bash
 pip install -r requirements.txt
 ```
 
-2. Configure
+### 3. Install the project in editable mode
 
-- Set AWS creds via env/SSO
-- Edit `configs/s3.yaml` (required)
-- If this is **Nadex-recommendation**, also edit `configs/strategy.yaml` (and optional `risk.yaml`)
+From the repository root:
 
-3. Run
+```bash
+pip install -e .
+```
 
-- Open a notebook in `notebooks/` (e.g., `01_signals.ipynb`, `02_backtest.ipynb`, or repo-specific notebook)
-- Artifacts (CSV/HTML/logs) will be written to **S3** prefixes from `configs/s3.yaml`
+This makes the `nadex_common` package importable from notebooks and scripts:
 
+```python
+from nadex_common import generate_rsi_signals, append_runlog_s3
+```
 
-## License
+---
 
-MIT License
+## Notebooks
 
-Copyright (c) 2025 Ian F. McCallum
+- **`notebooks/nadex-results.ipynb`**  
+  Extracts and normalizes Nadex Daily Results PDFs and writes cleaned CSVs to S3.  
+  Uses configuration from `configs/s3.yaml` and a mapping file to standardize columns.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+- **`notebooks/nadex-recommendation.ipynb`**  
+  Loads cleaned historical data, computes indicators (RSI, trend filters), and emits daily recommendations.  
+  Uses shared logic from `src/nadex_common/strategy_rsi.py` and runtime settings from `configs/strategy.yaml`.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+- **`notebooks/nadex-backtesting.ipynb`**  
+  Reuses the same shared strategy logic to backtest different RSI modes/thresholds and fee assumptions.  
+  Produces win rate, gross/net P&L, and summary artifacts to S3.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Each notebook is designed as a **scriptable workflow** rather than a long-lived analysis scratchpad. The goal is to keep the logic refactor-friendly so that future services/agents can call the same shared functions.
 
+---
 
+## Configuration
+
+Configuration is externalized to keep code portable and environment-agnostic:
+
+- **`configs/s3.yaml`**  
+  - `bucket`: primary S3 bucket for private artifacts  
+  - `public_bucket` (optional): bucket for public/HTML reports  
+  - `prefixes`: subfolder prefixes (historical, recommendations, reports, logs, etc.)  
+  - `mapping_file`: key/path for any symbol or ticker mapping CSVs
+
+- **`configs/strategy.yaml`**  
+  - RSI mode: `centerline` or `reversal`  
+  - RSI thresholds for entries/exits  
+  - Guardrails: confidence threshold, max positions per day, etc.
+
+The goal is that the **same code** can run in different environments (local, SageMaker, containers) by only changing config files.
+
+---
+
+## Shared Library (`nadex_common`)
+
+The `src/nadex_common` package contains shared logic, for example:
+
+- **`strategy_rsi.py`**  
+  - RSI calculation and signal generation  
+  - Trend filters (MACD/SMA)  
+  - Parameterized modes (centerline/reversal) driven by `strategy.yaml`
+
+- **`utils_s3.py`**  
+  - S3 helpers for reading/writing DataFrames and text  
+  - Run-log append helpers for `logs/run_log.csv`  
+  - Safe wrappers around bucket/prefix access (guards added in later sprints)
+
+By installing the repo in editable mode (`pip install -e .`), all notebooks and future services can import these functions without manipulating `sys.path`.
+
+---
+
+## Sprints
+
+Track the evolution of the project in the `sprints/` folder:
+
+- **`sprint_1.md`** — Historical Results MVP (Nadex-results)  
+- **`sprint_2.md`** — Config + shared library + recommendation pipeline  
+- **`sprint_2_5.md`** — Monorepo consolidation and `nadex_common` setup  
+- **`sprint_3.md`** — Bucket guards + backtesting baseline
+
+Each sprint file includes:
+
+- Sprint goal  
+- User stories targeted  
+- Definition of done  
+- End-of-sprint status and notes
+
+This acts as a NATOPS-style logbook for how the LIVEWELL Nadex system changes over time.
+
+---
+
+## Next Steps
+
+- Complete **Sprint 2.5** tasks to stand up the monorepo structure and shared library.  
+- Proceed to **Sprint 3** to add bucket guards and establish a stable backtesting baseline using the shared `nadex_common` package.
