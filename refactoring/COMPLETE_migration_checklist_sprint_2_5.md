@@ -55,7 +55,7 @@ You can update this file as you go — check off items, add notes, or record sma
 - [X] Create `configs/` folder in the monorepo.
 - [X] Copy `s3.yaml` into `configs/s3.yaml`.
 - [X] Copy `strategy.yaml` into `configs/strategy.yaml`.
-- [ ] Verify notebooks load config from `configs/*.yaml` using the existing loader.
+- [X] Verify notebooks load config from `configs/*.yaml` using the existing loader.
 
 ---
 
