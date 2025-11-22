@@ -7,28 +7,28 @@ You can update this file as you go — check off items, add notes, or record sma
 
 ## 1. Monorepo Bootstrap
 
-- [ ] Create new repo: `livewell-nadex` on GitHub.
-- [ ] Clone locally and create base folder structure:
-  - [ ] `src/nadex_common/`
-  - [ ] `notebooks/`
-  - [ ] `configs/`
-  - [ ] `sprints/`
+- [X] Create new repo: `livewell-nadex` on GitHub.
+- [X] Clone locally and create base folder structure:
+  - [X] `src/nadex_common/`
+  - [X] `notebooks/`
+  - [X] `configs/`
+  - [X] `sprints/`
 
-- [ ] Add `pyproject.toml` to repo root.
-- [ ] Add `requirements.txt` (copy from current primary repo or consolidate later).
-- [ ] Add `.gitignore` tailored for Python + notebooks.
+- [X] Add `pyproject.toml` to repo root.
+- [X] Add `requirements.txt` (copy from current primary repo or consolidate later).
+- [X] Add `.gitignore` tailored for Python + notebooks.
 
 ---
 
 ## 2. Shared Library (`nadex_common`)
 
-- [ ] Copy `strategy_rsi.py` from existing `lib/` into `src/nadex_common/strategy_rsi.py`.
-- [ ] Copy `utils_s3.py` from existing `lib/` into `src/nadex_common/utils_s3.py`.
-- [ ] Create `src/nadex_common/__init__.py` that re-exports core functions:
-  - [ ] `generate_rsi_signals`
-  - [ ] `append_runlog_s3`
-  - [ ] `save_dataframe_to_s3`, `save_text_to_s3` (if present)
-- [ ] From repo root, run `pip install -e .` to enable imports:
+- [X] Copy `strategy_rsi.py` from existing `lib/` into `src/nadex_common/strategy_rsi.py`.
+- [X] Copy `utils_s3.py` from existing `lib/` into `src/nadex_common/utils_s3.py`.
+- [X] Create `src/nadex_common/__init__.py` that re-exports core functions:
+  - [X] `generate_rsi_signals`
+  - [X] `append_runlog_s3`
+  - [X] `save_dataframe_to_s3`, `save_text_to_s3` (if present)
+- [X] From repo root, run `pip install -e .` to enable imports:
   ```bash
   pip install -e .
   ```
@@ -38,7 +38,7 @@ You can update this file as you go — check off items, add notes, or record sma
 ## 3. Notebooks
 
 - [ ] Copy `nadex-results.ipynb` into `notebooks/`.
-- [ ] Copy `nadex-recommendation.ipynb` into `notebooks/`.
+- [X] Copy `nadex-recommendation.ipynb` into `notebooks/`.
 - [ ] Copy `nadex-backtesting.ipynb` into `notebooks/`.
 
 - [ ] In each notebook, update imports to use `nadex_common` instead of local `lib/`:
@@ -52,24 +52,24 @@ You can update this file as you go — check off items, add notes, or record sma
 
 ## 4. Configuration
 
-- [ ] Create `configs/` folder in the monorepo.
-- [ ] Copy `s3.yaml` into `configs/s3.yaml`.
-- [ ] Copy `strategy.yaml` into `configs/strategy.yaml`.
+- [X] Create `configs/` folder in the monorepo.
+- [X] Copy `s3.yaml` into `configs/s3.yaml`.
+- [X] Copy `strategy.yaml` into `configs/strategy.yaml`.
 - [ ] Verify notebooks load config from `configs/*.yaml` using the existing loader.
 
 ---
 
 ## 5. Sprints & Documentation
 
-- [ ] Create `sprints/` folder.
-- [ ] Add existing sprint files:
-  - [ ] `sprint_1.md`
-  - [ ] `sprint_2.md`
-  - [ ] `sprint_2_5.md`
-  - [ ] `sprint_3.md`
-- [ ] Add root `README.md` explaining the new structure (this file).
+- [X] Create `sprints/` folder.
+- [X] Add existing sprint files:
+  - [X] `sprint_1.md`
+  - [X] `sprint_2.md`
+  - [X] `sprint_2_5.md`
+  - [X] `sprint_3.md`
+- [X] Add root `README.md` explaining the new structure (this file).
 
-- [ ] Optional: update the LIVEWELL Canvas to reference the new monorepo structure and URL.
+- [X] Optional: update the LIVEWELL Canvas to reference the new monorepo structure and URL.
 
 ---
 
