@@ -37,7 +37,7 @@ You can update this file as you go — check off items, add notes, or record sma
 
 ## 3. Notebooks
 
-- [ ] Copy `nadex-results.ipynb` into `notebooks/`.
+- [X] Copy `nadex-results.ipynb` into `notebooks/`.
 - [X] Copy `nadex-recommendation.ipynb` into `notebooks/`.
 - [ ] Copy `nadex-backtesting.ipynb` into `notebooks/`.
 
@@ -112,4 +112,3 @@ For each notebook:
 
 Use this space to capture any deviations from the plan (for example, if you decide to keep one repo active as a staging area or you introduce additional shared modules):
 
-- 
